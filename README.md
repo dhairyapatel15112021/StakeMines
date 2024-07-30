@@ -1,8 +1,8 @@
-# React + Vite
+# Stake Mines
+A replica of the popular Stake Mines game with an alternative multiplier formula. This project aims to closely mimic the original game mechanics while offering a different approach to calculating the multiplier for revealed safe tiles. It's an exciting way to experience the Mines game concept.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Features
+-  Realistic minefield setup
+-  Safe tile reveal logic
+-  Custom multiplier calculation
+-  User-friendly interface
