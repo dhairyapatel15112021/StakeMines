@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { selectMinesAtoms } from '../../store/atom/selectMines'
 import MySvgComponent from './diamond';
 import Bomb from './bomb';
@@ -11,7 +11,7 @@ import { currnetMinesAtoms } from '../../store/atom/currentMines';
 
 
 export const Grid = () => {
-  const selectMines = useRecoilValue(selectMinesAtoms);
+  const [selectMines,setSelectMines] = useRecoilState(selectMinesAtoms);
   const setCurrentGridNumber = useSetRecoilState(currnetMinesAtoms);
   const [isBet,setIsBet] = useRecoilState(betAtom);
   const [portalContainer, setPortalContainer] = useState([]);
@@ -35,6 +35,7 @@ export const Grid = () => {
       setPortalMineContainer(mineDiv);
       setIsBet(false);
       setCurrentGridNumber(0);
+      setSelectMines([]);
       bombAudio.play();
       setTimeout(()=>{
         setPortalContainer([]);
