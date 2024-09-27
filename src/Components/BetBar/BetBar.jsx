@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { betAmountAtom } from '../../store/atom/betAmount';
 import { walletSelector } from '../../store/selector/walletSelector';
@@ -7,9 +7,11 @@ import { selectMinesAtoms } from '../../store/atom/selectMines';
 import clickSound from '../../assets/click.wav';
 import { profitTimeSelector } from '../../store/selector/profitTimesSelector';
 import { betAtom } from '../../store/atom/bet';
+import { intermediateBetamountAtom } from '../../store/atom/intermediateBetamount';
 
 export const BetBar = () => {
-    const [betAmount, setBetAmount] = useRecoilState(betAmountAtom);
+    const setBetAmount = useSetRecoilState(betAmountAtom);
+    const [intermediateBetamount , setintermediateBetamount] = useRecoilState(intermediateBetamountAtom);
     const walletAmount = useRecoilValue(walletSelector);
     const [mines, setMines] = useRecoilState(minesAtom);
     const [selectmines, setSelectMines] = useRecoilState(selectMinesAtoms);
@@ -26,7 +28,7 @@ export const BetBar = () => {
             alert("Insufficient Balance");
             return;
         }
-        setBetAmount(() => amount);
+        setintermediateBetamount(()=>amount);
     }
 
     const selectMines = () => {
@@ -40,6 +42,7 @@ export const BetBar = () => {
         }
         setSelectMines(tempMines); // Update state once with the complete array
         setBet(true);
+        setBetAmount(()=>intermediateBetamount);
         audio.play();
     }
 
@@ -48,15 +51,15 @@ export const BetBar = () => {
             <div className='bg-[#213743] h-[95%] w-[90%] rounded-md p-2'>
                 <div className='flex items-center justify-between text-[#A8B3C7]'>
                     <div>Bet Amount</div>
-                    <div>${betAmount}</div>
+                    <div>${intermediateBetamount}</div>
                 </div>
                 <div className='bg-[#304553] rounded-md p-1 mt-2 text-white'>
-                    <input type="number" value={betAmount} className='bg-[#0e212e] p-2 w-[70%] outline-none border border-[#0e212e] hover:border-white' onChange={(e) => setBetBar(e)} />
-                    <button className='w-[15%] text-center border-r border-[#A8B3C7]' onClick={() => setBetAmount(betAmount * 0.5)}>1/2</button>
-                    <button className='w-[15%] text-center' onClick={() => setBetAmount(betAmount * 2)}>2x</button>
+                    <input type="number" value={intermediateBetamount} className={`bg-[#0e212e] p-2 w-[70%] outline-none border border-[#0e212e] hover:border-white ${isBet ? 'opacity-50' : ''}`} onChange={(e) => setBetBar(e)} disabled={isBet}/>
+                    <button className={`w-[15%] text-center border-r border-[#A8B3C7] ${isBet? 'opacity-50' : ''}`} onClick={() => setBetBar( { "target": { "value": intermediateBetamount * 0.5 } } )} disabled={isBet}>1/2</button>
+                    <button className={`w-[15%] text-center ${isBet ? 'opacity-50' : ''}`} onClick={() => setBetBar( { "target": { "value": intermediateBetamount * 2 } } )} disabled={isBet}>2x</button>
                 </div>
                 <div className='text-[#A8B3C7] mt-3'>Mines</div>
-                <select className='w-[50%] md:w-[100%] p-2 bg-[#0e212e] text-white border-2 border-[#304553] rounded-md  outline-none hover:border-white' onChange={(e) => setMines(parseInt(e.target.value)+1)}>
+                <select className='w-[50%] md:w-[100%] p-2 bg-[#0e212e] text-white border-2 border-[#304553] rounded-md  outline-none hover:border-white' onChange={(e) => setMines(parseInt(e.target.value)+1)} disabled={isBet}>
                     {
                         Array.from({ length: 24 }).map((_, index) => {
                             return (
@@ -69,7 +72,7 @@ export const BetBar = () => {
                     !isBet ? <button className='w-[100%] mt-8 md:mt-4 py-3 px-2 rounded-sm bg-[#00e700] font-semibold' onClick={selectMines}>Bet</button> :
                         <div>
                             <div className='text-[#A8B3C7] mt-3'>Total profit ({profitTimes}x)</div>
-                            <div className='w-[100%] p-2 bg-[#0e212e] text-white border-2 border-[#304553] rounded-md  outline-none hover:border-white'>{betAmount*profitTimes}</div>
+                            <div className='w-[100%] p-2 bg-[#0e212e] text-white border-2 border-[#304553] rounded-md  outline-none hover:border-white'>{intermediateBetamount*profitTimes}</div>
                         </div>
                 }
             </div>

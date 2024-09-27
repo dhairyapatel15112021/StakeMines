@@ -43,7 +43,7 @@ export const Grid = () => {
       },1500);
     }
   }
-
+  
   return (
     <div className='bg-[#0e212e] row-span-6 col-span-full md:row-span-10 md:col-span-4 flex items-center justify-center p-3 md:p-0'>
       <div className='grid h-[50vmax] w-[60vmax] md:h-[650px] md:w-[650px] grid-rows-5 grid-cols-5 gap-4' ref={gridRef}>
