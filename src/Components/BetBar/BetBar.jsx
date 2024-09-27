@@ -34,8 +34,8 @@ export const BetBar = () => {
     const selectMines = () => {
         let tempMines = [...selectmines]; // Create a temporary array to hold the mines
         while (tempMines.length < mines) {
-            const rowIndex = Math.floor(Math.random() * 4);
-            const columnIndex = Math.floor(Math.random() * 4);
+            const rowIndex = Math.floor(Math.random() * 5);
+            const columnIndex = Math.floor(Math.random() * 5);
             if (tempMines.findIndex(([row, col]) => row === rowIndex && col === columnIndex) === -1) {
                 tempMines.push([rowIndex, columnIndex]);
             }

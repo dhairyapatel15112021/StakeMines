@@ -9,7 +9,6 @@ import diamondSound from '../../assets/diamond.mp3';
 import { betAtom } from '../../store/atom/bet';
 import { currnetMinesAtoms } from '../../store/atom/currentMines';
 
-
 export const Grid = () => {
   const [selectMines,setSelectMines] = useRecoilState(selectMinesAtoms);
   const setCurrentGridNumber = useSetRecoilState(currnetMinesAtoms);
@@ -21,7 +20,7 @@ export const Grid = () => {
   const diamondAudio = new Audio(diamondSound);
 
   function checkMines(gridArray) {
-    if (!isBet) {
+    if (!isBet || gridRef.current.children[gridArray[2]].children.length != 0) { // This condition is checking that already diamond exist or not?
       return;
     }
     if (selectMines.findIndex(([row, col]) => row === gridArray[0] && col === gridArray[1]) === -1) {
@@ -43,7 +42,7 @@ export const Grid = () => {
       },1500);
     }
   }
-  
+
   return (
     <div className='bg-[#0e212e] row-span-6 col-span-full md:row-span-10 md:col-span-4 flex items-center justify-center p-3 md:p-0'>
       <div className='grid h-[50vmax] w-[60vmax] md:h-[650px] md:w-[650px] grid-rows-5 grid-cols-5 gap-4' ref={gridRef}>
